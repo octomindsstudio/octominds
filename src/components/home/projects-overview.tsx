@@ -12,10 +12,7 @@ const projects = [
     category: "Full Stack Development",
     description:
       "A premium halal Japanese restaurant brought online — complete e-commerce storefront with reservation system, menu management, and seamless Stripe checkout.",
-    tech: ["Next.js", "Prisma", "Stripe", "PostgreSQL"],
-    bgGradient: "from-orange-500/20 to-red-900/40",
-    accent: "text-orange-400",
-    accentBg: "bg-orange-400",
+    tech: ["Next.js", "Prisma", "PostgreSQL"],
     url: "https://teppantorabd.com",
   },
   {
@@ -25,15 +22,12 @@ const projects = [
     category: "UI/UX Design & Development",
     description:
       "An elegant fashion destination with a focus on beautiful product presentation, size-guided shopping experience, and conversion-optimized checkout flow.",
-    tech: ["React", "Tailwind CSS", "Headless CMS", "Vercel"],
-    bgGradient: "from-violet-500/20 to-blue-900/40",
-    accent: "text-violet-400",
-    accentBg: "bg-violet-400",
+    tech: ["React", "Tailwind CSS"],
     url: "https://aromfashionbd.com",
   },
 ];
 
-export function FeaturedProjects() {
+export function ProjectsOverview() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const marqueeRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
@@ -137,7 +131,7 @@ export function FeaturedProjects() {
 
             <h2
               ref={headlineRef}
-              className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.95] flex flex-col items-start"
+              className="font-display text-[8.5vw] sm:text-6xl md:text-7xl font-black tracking-tighter uppercase leading-[0.95] flex flex-col items-start"
             >
               <div className="overflow-hidden">
                 <span className="word-reveal inline-block">Projects</span>
@@ -147,7 +141,7 @@ export function FeaturedProjects() {
               </div>
             </h2>
 
-            <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
+            <p className="mt-6 text-sm sm:text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
               High-impact technical solutions and creative explorations crafted
               with precision and purpose.
             </p>
@@ -166,7 +160,7 @@ export function FeaturedProjects() {
             >
               {/* Background Glow */}
               <div
-                className={`absolute inset-0 bg-linear-to-br ${project.bgGradient} opacity-30`}
+                className={`absolute inset-0 bg-linear-to-br from-primary/20 to-primary/40 opacity-30`}
               />
 
               {/* Placeholder "Project Card" */}
@@ -176,15 +170,6 @@ export function FeaturedProjects() {
                   {project.num}
                 </span>
 
-                {/* Inner Content Placeholder */}
-                <div className="flex flex-col items-center text-center">
-                  <div
-                    className={`w-12 h-12 rounded-full ${project.accentBg} mb-4 blur-xl opacity-50`}
-                  />
-                  <h4 className="font-display text-3xl font-bold uppercase tracking-tight text-white/90">
-                    {project.title}
-                  </h4>
-                </div>
               </div>
             </div>
           ))}
@@ -199,7 +184,7 @@ export function FeaturedProjects() {
             >
               <div className="flex items-center gap-3 mb-6">
                 <div
-                  className={`w-2.5 h-2.5 rounded-full ${project.accentBg}`}
+                  className={`w-2.5 h-2.5 rounded-full bg-primary`}
                 />
                 <span className="font-sans text-xs md:text-sm uppercase tracking-[0.25em] text-muted-foreground">
                   {project.category}
@@ -207,7 +192,7 @@ export function FeaturedProjects() {
               </div>
 
               <p
-                className={`font-sans text-xs md:text-sm uppercase tracking-[0.3em] ${project.accent} mb-4`}
+                className={`font-sans text-xs md:text-sm uppercase tracking-[0.3em] text-primary mb-4`}
               >
                 {project.subtitle}
               </p>
@@ -246,7 +231,7 @@ export function FeaturedProjects() {
               {/* Mobile Visual (visible only on mobile) */}
               <div className="lg:hidden mt-12 w-full aspect-video rounded-2xl border border-border bg-bg-2 overflow-hidden relative">
                 <div
-                  className={`absolute inset-0 bg-linear-to-br ${project.bgGradient} opacity-30`}
+                  className={`absolute inset-0 bg-linear-to-br from-primary/20 to-primary/40 opacity-30`}
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span className="font-display text-2xl font-bold uppercase text-white/90">
