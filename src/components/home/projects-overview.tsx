@@ -104,7 +104,7 @@ export function ProjectsOverview() {
   return (
     <section
       ref={sectionRef}
-      className="relative px-4 sm:px-6 md:px-12 py-24 md:py-52"
+      className="relative px-4 sm:px-6 md:px-12 pt-24 md:pt-52"
     >
       {/* Kinetic Background Text Container (Isolated for overflow) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">

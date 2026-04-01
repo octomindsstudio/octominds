@@ -2,6 +2,7 @@
 
 import { BackgroundMesh } from "@/components/home/background-mesh";
 import { HeroSection } from "@/components/home/hero-section";
+import { ServicesOffering } from "@/components/home/services-offering";
 import { ProjectsOverview } from "@/components/home/projects-overview";
 
 export default function Home() {
@@ -10,6 +11,7 @@ export default function Home() {
       <BackgroundMesh />
       <HeroSection />
       <ProjectsOverview />
+      <ServicesOffering />
     </main>
   );
 }

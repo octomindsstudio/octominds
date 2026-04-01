@@ -189,3 +189,15 @@ body {
   overflow-x: hidden;
   width: 100%;
 }
+
+a,
+button {
+  @apply cursor-pointer;
+}
+
+img {
+  @apply select-none;
+
+  -webkit-user-drag: none;
+  -moz-window-dragging: none;
+}
