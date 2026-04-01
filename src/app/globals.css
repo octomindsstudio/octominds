@@ -1,26 +1,189 @@
 @import "tailwindcss";
+@import "@heroui/styles";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* 
+ * Agency Theme Customization
+ * Includes all required HeroUI variables color-matched to the custom theme.
+ */
 
-@theme inline {
+@theme {
+  /* --- Base & Custom Backgrounds --- */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg-1: var(--background);
+  --color-bg-2: var(--surface-secondary);
+  --color-bg-3: var(--surface-tertiary);
+
+  /* --- Typography --- */
+  --font-sans: var(--font-varela-round), Arial, sans-serif;
+  --font-display: var(--font-syne), sans-serif;
+
+  /* --- Primary & Accent --- */
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  /* --- HeroUI Surfaces --- */
+  --color-surface: var(--surface);
+  --color-surface-foreground: var(--surface-foreground);
+  --color-surface-secondary: var(--surface-secondary);
+  --color-surface-secondary-foreground: var(--surface-secondary-foreground);
+  --color-surface-tertiary: var(--surface-tertiary);
+  --color-surface-tertiary-foreground: var(--surface-tertiary-foreground);
+
+  /* --- Feedback --- */
+  --color-danger: var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+
+  /* --- Fields, Segments & Overlays --- */
+  --color-field: var(--field-background);
+  --color-field-foreground: var(--field-foreground);
+  --color-field-placeholder: var(--field-placeholder);
+
+  --color-overlay: var(--overlay);
+  --color-overlay-foreground: var(--overlay-foreground);
+
+  --color-default: var(--default);
+  --color-default-foreground: var(--default-foreground);
+
+  --color-segment: var(--segment);
+  --color-segment-foreground: var(--segment-foreground);
+
+  /* --- UI Structural & Interactive --- */
+  --color-focus: var(--focus);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-separator: var(--separator);
+  --color-scrollbar: var(--scrollbar);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* --- Primary: Vibrant Agency Orange --- */
+  --primary: oklch(0.65 0.22 45);
+  --primary-foreground: oklch(0.98 0 0);
+
+  /* --- Accent: Deep/Bright Blue --- */
+  --accent: oklch(0.55 0.18 250);
+  --accent-foreground: oklch(0.98 0 0);
+
+  /* --- Backgrounds & Surfaces --- */
+  --background: oklch(0.99 0.005 60); /* Very light warm off-white */
+  --foreground: oklch(0.15 0.01 60);
+
+  --surface: oklch(0.99 0.005 60);
+  --surface-foreground: oklch(0.15 0.01 60);
+
+  --surface-secondary: oklch(0.96 0.01 60);
+  --surface-secondary-foreground: oklch(0.15 0.01 60);
+
+  --surface-tertiary: oklch(0.93 0.015 60);
+  --surface-tertiary-foreground: oklch(0.15 0.01 60);
+
+  /* --- Feedback Colors --- */
+  --danger: oklch(0.65 0.23 15);
+  --danger-foreground: oklch(0.98 0 0);
+  --success: oklch(0.65 0.18 140);
+  --success-foreground: oklch(0.98 0 0);
+  --warning: oklch(0.75 0.15 80);
+  --warning-foreground: oklch(0.2 0.01 60);
+
+  /* --- Fields, Segment, & Navigation --- */
+  --field-background: oklch(0.97 0.008 60);
+  --field-foreground: oklch(0.15 0.01 60);
+  --field-placeholder: oklch(0.55 0.01 60);
+
+  --overlay: oklch(0.99 0.005 60);
+  --overlay-foreground: oklch(0.15 0.01 60);
+
+  --default: oklch(0.94 0.01 60);
+  --default-foreground: oklch(0.2 0.01 60);
+
+  --segment: oklch(0.94 0.01 60);
+  --segment-foreground: oklch(0.2 0.01 60);
+
+  --focus: var(--accent); /* Blue focus rings */
+  --muted: oklch(0.55 0.01 60);
+
+  /* --- Structural --- */
+  --border: oklch(0.9 0.01 60);
+  --separator: oklch(0.9 0.01 60);
+  --scrollbar: oklch(0.85 0.01 60);
+
+  --radius: 0.5rem;
+  --field-radius: 0.5rem;
 }
+
+.dark,
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* --- Primary: Vibrant Agency Orange --- */
+  --primary: oklch(0.65 0.22 45);
+  --primary-foreground: oklch(0.14 0.015 250);
+
+  /* --- Accent: Deep/Bright Blue --- */
+  --accent: oklch(0.6 0.18 250);
+  --accent-foreground: oklch(0.98 0 0);
+
+  /* --- Backgrounds & Surfaces --- */
+  --background: oklch(
+    0.14 0.015 250
+  ); /* Rich deep blue-gray matching the blue accent */
+  --foreground: oklch(0.98 0.005 250);
+
+  --surface: oklch(0.14 0.015 250);
+  --surface-foreground: oklch(0.98 0.005 250);
+
+  --surface-secondary: oklch(0.18 0.02 250);
+  --surface-secondary-foreground: oklch(0.98 0.005 250);
+
+  --surface-tertiary: oklch(0.22 0.025 250);
+  --surface-tertiary-foreground: oklch(0.98 0.005 250);
+
+  /* --- Feedback Colors --- */
+  --danger: oklch(0.6 0.2 15);
+  --danger-foreground: oklch(0.98 0 0);
+  --success: oklch(0.6 0.18 140);
+  --success-foreground: oklch(0.98 0 0);
+  --warning: oklch(0.7 0.15 80);
+  --warning-foreground: oklch(0.15 0.02 250);
+
+  /* --- Fields, Segment, & Navigation --- */
+  --field-background: oklch(0.2 0.02 250);
+  --field-foreground: oklch(0.98 0.005 250);
+  --field-placeholder: oklch(0.7 0.01 250);
+
+  --overlay: oklch(0.18 0.02 250);
+  --overlay-foreground: oklch(0.98 0.005 250);
+
+  --default: oklch(0.24 0.02 250);
+  --default-foreground: oklch(0.98 0.01 250);
+
+  --segment: oklch(0.24 0.02 250);
+  --segment-foreground: oklch(0.98 0.01 250);
+
+  --focus: var(--accent); /* Blue focus rings */
+  --muted: oklch(0.7 0.01 250);
+
+  /* --- Structural --- */
+  --border: oklch(0.25 0.02 250);
+  --separator: oklch(0.25 0.02 250);
+  --scrollbar: oklch(0.3 0.02 250);
+}
+
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
