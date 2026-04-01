@@ -15,7 +15,7 @@
   --color-bg-3: var(--surface-tertiary);
 
   /* --- Typography --- */
-  --font-sans: var(--font-varela-round), Arial, sans-serif;
+  --font-sans: var(--font-outfit), Arial, sans-serif;
   --font-display: var(--font-syne), sans-serif;
 
   /* --- Primary & Accent --- */

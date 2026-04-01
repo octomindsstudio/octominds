@@ -169,7 +169,6 @@ export function ProjectsOverview() {
                 <span className="absolute -bottom-8 -right-8 font-display text-[12vw] font-black text-white/3 select-none">
                   {project.num}
                 </span>
-
               </div>
             </div>
           ))}
@@ -183,9 +182,7 @@ export function ProjectsOverview() {
               className="project-info-block min-h-[70vh] lg:min-h-screen flex flex-col justify-center py-16 lg:py-0 border-b lg:border-none border-border last:border-none"
             >
               <div className="flex items-center gap-3 mb-6">
-                <div
-                  className={`w-2.5 h-2.5 rounded-full bg-primary`}
-                />
+                <div className={`w-2.5 h-2.5 rounded-full bg-primary`} />
                 <span className="font-sans text-xs md:text-sm uppercase tracking-[0.25em] text-muted-foreground">
                   {project.category}
                 </span>
@@ -197,7 +194,7 @@ export function ProjectsOverview() {
                 {project.subtitle}
               </p>
 
-              <h3 className="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tight uppercase leading-[0.9] mb-8">
+              <h3 className="font-sans text-4xl sm:text-5xl md:text-6xl font-black tracking-tight uppercase leading-[0.9] mb-8">
                 {project.title}
               </h3>
 

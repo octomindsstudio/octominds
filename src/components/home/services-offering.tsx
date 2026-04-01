@@ -157,7 +157,7 @@ export function ServicesOffering() {
             <div className="relative z-10 flex flex-col h-full">
               <div className="w-12 h-px bg-primary/50 mb-8 group-hover:w-20 transition-all duration-700" />
 
-              <h3 className="font-display text-2xl md:text-3xl lg:text-4xl font-black uppercase tracking-tight mb-6 group-hover:text-primary transition-colors duration-500 wrap-break-word hyphens-auto leading-[0.9]">
+              <h3 className="font-sans text-2xl md:text-3xl lg:text-4xl font-black uppercase tracking-tight mb-6 group-hover:text-primary transition-colors duration-500 wrap-break-word hyphens-auto leading-tight">
                 {item.title}
               </h3>
 

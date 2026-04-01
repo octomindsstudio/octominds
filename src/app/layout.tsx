@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Varela_Round, Syne } from "next/font/google";
+import { Varela_Round, Syne, Outfit } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers/providers";
 import { CustomCursor } from "@/components/ui/custom-cursor";
@@ -17,6 +17,12 @@ const syne = Syne({
   weight: ["400", "500", "600", "700", "800"],
 });
 
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+});
+
 export const metadata: Metadata = {
   title: "Agency | Bold & Animated",
   description: "A highly interactive animated experience",
@@ -30,7 +36,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${varelaRound.variable} ${syne.variable} h-full antialiased`}
+      className={`${varelaRound.variable} ${syne.variable} ${outfit.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans">
