@@ -18,6 +18,21 @@ export function SmoothScrollProvider({
     window.scrollTo(0, 0);
   }, [pathname]);
 
+  useEffect(() => {
+    function update(time: number) {
+      if (typeof window !== "undefined" && ScrollTrigger) {
+        ScrollTrigger.update();
+      }
+    }
+
+    const rafId = requestAnimationFrame(function loop(time) {
+      update(time);
+      requestAnimationFrame(loop);
+    });
+
+    return () => cancelAnimationFrame(rafId);
+  }, []);
+
   return (
     <ReactLenis
       root
@@ -28,14 +43,8 @@ export function SmoothScrollProvider({
         smoothWheel: true,
         wheelMultiplier: 1.2,
       }}
-      onScroll={() => {
-        // Keeps GSAP ScrollTrigger perfectly in sync with Lenis
-        if (typeof window !== "undefined" && ScrollTrigger) {
-          ScrollTrigger.update();
-        }
-      }}
     >
-      {children}
+      {children as any}
     </ReactLenis>
   );
 }
