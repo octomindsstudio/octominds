@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@heroui/styles";
+import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 
 const NAV_LINKS = [
   { title: "Home", href: "/" },
@@ -41,7 +42,8 @@ export function Header() {
           </Link>
         </div>
 
-        <div className="pointer-events-auto flex items-center gap-4">
+        <div className="pointer-events-auto flex items-center gap-4 text-white">
+          <ThemeSwitcher />
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="group relative flex flex-col justify-center items-center w-12 h-12 rounded-full border border-white/20 hover:bg-white transition-colors cursor-pointer z-100"
