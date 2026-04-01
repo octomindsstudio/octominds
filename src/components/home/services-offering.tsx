@@ -114,7 +114,7 @@ export function ServicesOffering() {
       <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/5 blur-[100px] rounded-full pointer-events-none z-0" />
 
       {/* Centered Section Header */}
-      <div className="relative mb-24 md:mb-40 z-10 text-center flex flex-col items-center">
+      <div className="relative mb-16 md:mb-24 z-10 text-center flex flex-col items-center">
         <div className="flex items-center gap-3 mb-8">
           <div className="h-px w-8 bg-primary/40" />
           <span className="font-sans text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-primary">
@@ -125,7 +125,7 @@ export function ServicesOffering() {
 
         <h2
           ref={headlineRef}
-          className="font-display text-[10vw] sm:text-7xl font-black tracking-tighter uppercase leading-[0.85] flex flex-col items-center perspective-1000"
+          className="font-display text-[10vw] sm:text-7xl font-black tracking-tighter uppercase leading-[0.90] flex flex-col items-center perspective-1000"
         >
           <div className="overflow-hidden">
             <span className="word-reveal inline-block">What We</span>
@@ -135,7 +135,7 @@ export function ServicesOffering() {
           </div>
         </h2>
 
-        <p className="mt-10 text-base md:text-xl text-muted-foreground font-sans max-w-2xl leading-relaxed mx-auto opacity-80">
+        <p className="mt-6 text-sm sm:text-lg md:text-xl text-muted-foreground font-sans max-w-2xl leading-relaxed mx-auto opacity-80">
           Tailored technical solutions designed to scale, succeed, and surpass
           the current AI-driven market trends.
         </p>
