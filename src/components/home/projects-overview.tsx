@@ -63,6 +63,8 @@ export function ProjectsOverview() {
                 opacity: 1,
                 scale: 1,
                 filter: "blur(0px)",
+                autoAlpha: 1,
+                pointerEvents: "auto",
                 duration: 0.8,
                 ease: "power2.out",
               });
@@ -71,6 +73,8 @@ export function ProjectsOverview() {
                 opacity: 0,
                 scale: 0.95,
                 filter: "blur(10px)",
+                autoAlpha: 0,
+                pointerEvents: "none",
                 duration: 0.8,
                 ease: "power2.inOut",
               });
@@ -137,7 +141,11 @@ export function ProjectsOverview() {
             <div
               key={`visual-${i}`}
               className="project-visual-item absolute inset-0 opacity-0 bg-bg-2 flex flex-col items-center justify-center p-6 xl:p-12 overflow-hidden"
-              style={{ opacity: i === 0 ? 1 : 0 }}
+              style={{
+                opacity: i === 0 ? 1 : 0,
+                pointerEvents: i === 0 ? "auto" : "none",
+                visibility: i === 0 ? "visible" : "hidden",
+              }}
             >
               {/* Background Glow */}
               <div

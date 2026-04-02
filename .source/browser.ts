@@ -8,6 +8,6 @@ const create = browser<typeof Config, import("fumadocs-mdx/runtime/types").Inter
 }>();
 const browserCollections = {
   blog: create.doc("blog", {"index.mdx": () => import("../content/blogs/index.mdx?collection=blog"), }),
-  project: create.doc("project", {"index.mdx": () => import("../content/projects/index.mdx?collection=project"), "teppantora.mdx": () => import("../content/projects/teppantora.mdx?collection=project"), }),
+  project: create.doc("project", {"arom.mdx": () => import("../content/projects/arom.mdx?collection=project"), "index.mdx": () => import("../content/projects/index.mdx?collection=project"), "teppantora.mdx": () => import("../content/projects/teppantora.mdx?collection=project"), }),
 };
 export default browserCollections;
