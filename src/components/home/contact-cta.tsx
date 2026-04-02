@@ -42,7 +42,7 @@ export function ContactCTA() {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={() => setIsHovered(true)}
-      className="relative w-full h-[80vh] md:h-screen flex flex-col items-center justify-center overflow-hidden bg-background border-t border-white/5"
+      className="relative w-full h-[80vh] md:h-screen flex flex-col items-center justify-center overflow-hidden bg-linear-to-b from-background to-primary/10"
     >
       {/* Background Glow */}
       <motion.div
