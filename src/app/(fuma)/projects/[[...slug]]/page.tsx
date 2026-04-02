@@ -49,10 +49,7 @@ const ProjectPage = async ({ params }: { params: Props }) => {
     <div className="relative min-h-screen bg-background selection:bg-primary selection:text-white overflow-x-clip">
       {/* Landing Page Mesh Background - Testing */}
       <BackgroundMesh />
-
-      {/* Editorial Grain Overlay */}
-      <div className="fixed inset-0 pointer-events-none z-100 opacity-[0.02] bg-[url('/grain.png')] mix-blend-overlay" />
-
+      
       {/* Main Orchestration */}
       <div className="pt-24 md:pt-40">
         {/* High-End Hero Header */}
@@ -208,7 +205,7 @@ const ProjectPage = async ({ params }: { params: Props }) => {
               whileInView={{ scale: 1, opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
-              className="relative w-full aspect-21/9 rounded-[2rem] overflow-hidden group shadow-2xl shadow-black/60 border border-white/5"
+              className="relative w-full aspect-21/9 rounded-xl md:rounded-[2rem] overflow-hidden group shadow-2xl shadow-black/60 border border-white/5"
             >
               <Image
                 src={thumbnail}
@@ -222,7 +219,7 @@ const ProjectPage = async ({ params }: { params: Props }) => {
         </div>
 
         {/* Content Section with Asymmetric Layout */}
-        <main className="max-w-6xl mx-auto px-6 pb-10 flex flex-col gap-32">
+        <main className="max-w-6xl mx-auto px-0 md:px-6 pb-10 flex flex-col gap-32">
           {/* Main MDX Content */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
