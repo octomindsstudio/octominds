@@ -41,6 +41,11 @@
       "sourceType": "github",
       "computedHash": "af9db85109491dbe11f36b13724835f0f03583a5e026bf496b3b257e27a3f753"
     },
+    "vercel-react-view-transitions": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "computedHash": "60ea14314de303bc3149e8cafe77ddb12e0ff6eb9408b6551061c456aed1d6d6"
+    },
     "writing-plans": {
       "source": "obra/superpowers",
       "sourceType": "github",

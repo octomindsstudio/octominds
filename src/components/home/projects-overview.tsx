@@ -136,7 +136,7 @@ export function ProjectsOverview() {
           {projects.map((project, i) => (
             <div
               key={`visual-${i}`}
-              className="project-visual-item absolute inset-0 opacity-0 bg-bg-2 flex flex-col items-center justify-center p-12 overflow-hidden"
+              className="project-visual-item absolute inset-0 opacity-0 bg-bg-2 flex flex-col items-center justify-center p-6 xl:p-12 overflow-hidden"
               style={{ opacity: i === 0 ? 1 : 0 }}
             >
               {/* Background Glow */}
@@ -241,15 +241,17 @@ export function ProjectsOverview() {
                     alt={project.title}
                   />
                 ) : (
-                  <div
-                    className={`absolute inset-0 bg-linear-to-br from-primary/20 to-primary/40 opacity-30`}
-                  />
+                  <>
+                    <div
+                      className={`absolute inset-0 bg-linear-to-br from-primary/20 to-primary/40 opacity-30`}
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                      <span className="font-display text-2xl font-bold uppercase text-white/90">
+                        {project.title}
+                      </span>
+                    </div>
+                  </>
                 )}
-                <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                  <span className="font-display text-2xl font-bold uppercase text-white/90">
-                    {project.title}
-                  </span>
-                </div>
               </Link>
             </div>
           ))}

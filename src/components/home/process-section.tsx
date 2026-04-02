@@ -37,62 +37,90 @@ const processes = [
 ];
 
 export function ProcessSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const leftColumnRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const numberRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useIsomorphicLayoutEffect(() => {
-    if (!containerRef.current || !leftColumnRef.current) return;
+    if (!sectionRef.current || !stickyRef.current) return;
 
-    const mm = gsap.matchMedia(containerRef.current);
+    const mm = gsap.matchMedia(sectionRef.current);
 
     mm.add("(min-width: 1024px)", () => {
-      // Pin the left column
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top 100px",
-        end: "bottom bottom",
-        pin: leftColumnRef.current,
-        pinSpacing: false,
-        scrub: true,
+      const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[];
+      const numbers = numberRefs.current.filter(Boolean) as HTMLDivElement[];
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1,
+          markers: true,
+        },
       });
 
-      // Handle step animations and highlights
-      const steps = gsap.utils.toArray<HTMLElement>(
-        ".process-step",
-        containerRef.current,
-      );
-      steps.forEach((step, i) => {
-        const numberId = `#process-number-${i}`;
-        const numberEl = containerRef.current?.querySelector(numberId);
+      cards.forEach((card, i) => {
+        if (i === 0) {
+          gsap.set(card, { opacity: 1, scale: 1, y: 0 });
+          gsap.set(numbers[i], { opacity: 1, color: "var(--primary)" });
+          return;
+        }
 
-        // Highlight number on the left
-        ScrollTrigger.create({
-          trigger: step,
-          start: "top 120px",
-          end: i === steps.length - 1 ? "bottom bottom" : "bottom 100px",
-          onToggle: (self) => {
-            if (self.isActive && numberEl) {
-              gsap.to(numberEl, {
-                opacity: 1,
-                x: 10,
-                color: "var(--primary)",
-                duration: 0.4,
-                overwrite: "auto",
-              });
-            } else if (numberEl) {
-              gsap.to(numberEl, {
-                opacity: 0.2,
-                x: 0,
-                color: "rgba(255, 255, 255, 0.4)",
-                duration: 0.4,
-                overwrite: "auto",
-              });
-            }
+        tl.fromTo(
+          card,
+          {
+            y: "100%",
+            opacity: 0,
+            scale: 0.9,
           },
-        });
+          {
+            y: "0%",
+            opacity: 1,
+            scale: 1,
+            duration: 1,
+            ease: "power2.inOut",
+          },
+          i - 0.5,
+        );
+
+        tl.to(
+          cards[i - 1],
+          {
+            scale: 0.95,
+            opacity: 0.4,
+            duration: 1,
+            ease: "power2.inOut",
+          },
+          "<",
+        );
+
+        tl.to(
+          numbers[i - 1],
+          {
+            opacity: 0.2,
+            color: "rgba(255, 255, 255, 0.4)",
+            duration: 0.2,
+          },
+          "<",
+        );
+
+        tl.to(
+          numbers[i],
+          {
+            opacity: 1,
+            color: "var(--primary)",
+            duration: 0.2,
+          },
+          "<+=0.5",
+        );
       });
 
-      ScrollTrigger.refresh();
+      return () => {
+        tl.kill();
+        ScrollTrigger.getAll().forEach((t) => t.kill());
+      };
     });
 
     return () => mm.revert();
@@ -100,78 +128,84 @@ export function ProcessSection() {
 
   return (
     <section
-      ref={containerRef}
-      className="relative w-full py-24 md:py-32 overflow-hidden"
+      ref={sectionRef}
+      className="relative w-full h-auto lg:h-[400vh] py-24 md:py-32 overflow-visible"
     >
-      <div className="container mx-auto px-6 flex flex-col md:flex-row items-start gap-12 md:gap-24">
-        {/* Left Column: Sequential Counter (Sticky) */}
-        <div
-          ref={leftColumnRef}
-          className="w-full md:w-1/3 flex flex-col justify-start"
-        >
-          <div className="space-y-4">
-            <h2 className="font-display text-4xl md:text-5xl font-bold uppercase tracking-tight text-foreground">
-              Our <br /> <span className="text-primary italic">Process</span>
-            </h2>
-            <div className="pt-8 space-y-6">
-              {processes.map((p, i) => (
-                <div
-                  key={p.id}
-                  id={`process-number-${i}`}
-                  className="flex items-center gap-4 text-2xl font-display font-medium text-foreground/40"
-                >
-                  <span className="text-primary font-bold">{p.id}</span>
-                  <span className="hidden md:inline-block h-px w-8 bg-current opacity-20" />
-                  <span className="text-xl opacity-0 md:opacity-100 transition-opacity">
-                    {p.title}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Right Column: Detailed Content (Scrolling) */}
-        <div className="w-full md:w-2/3 space-y-24 md:space-y-48 pb-24">
-          {processes.map((p, i) => (
-            <div
-              key={p.id}
-              className={cn(
-                "process-step",
-                `process-step-${i}`,
-                "group relative space-y-8 p-8 md:p-12 rounded-3xl border border-white/5 bg-white/2 backdrop-blur-sm transition-all duration-500 hover:border-primary/20",
-              )}
-            >
-              <div className="space-y-4">
-                <span className="inline-block px-4 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest border border-primary/20">
-                  Phase {p.id}
-                </span>
-                <h3 className="font-display text-3xl md:text-5xl font-bold tracking-tight text-foreground">
-                  {p.title}
-                </h3>
-                <p className="font-sans text-lg md:text-xl text-foreground/60 leading-relaxed max-w-2xl">
-                  {p.description}
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {p.deliverables.map((d) => (
+      <div
+        ref={stickyRef}
+        className="relative lg:sticky top-0 h-auto lg:h-screen w-full flex items-center justify-center overflow-visible lg:overflow-hidden"
+      >
+        <div className="container mx-auto px-6 flex flex-col md:flex-row items-center gap-12 md:gap-24">
+          {/* Left Column: Sequential Counter */}
+          <div className="w-full md:w-1/3 flex flex-col justify-start relative z-20">
+            <div className="space-y-4">
+              <h2 className="font-display text-4xl md:text-5xl font-bold uppercase tracking-tight text-foreground">
+                Our <br /> <span className="text-primary italic">Process</span>
+              </h2>
+              <div className="pt-8 space-y-6">
+                {processes.map((p, i) => (
                   <div
-                    key={d}
-                    className="flex items-center gap-3 text-foreground/80 font-sans"
+                    key={p.id}
+                    ref={(el) => (numberRefs.current[i] = el)}
+                    className="flex items-center gap-4 text-2xl font-display font-medium text-foreground/40 opacity-[0.2]"
                   >
-                    <div className="h-1.5 w-1.5 rounded-full bg-primary" />
-                    <span>{d}</span>
+                    <span className="text-primary font-bold">{p.id}</span>
+                    <span className="hidden md:inline-block h-px w-8 bg-current opacity-20" />
+                    <span className="text-xl opacity-0 md:opacity-100 transition-opacity">
+                      {p.title}
+                    </span>
                   </div>
                 ))}
               </div>
-
-              {/* Decorative background element */}
-              <div className="absolute top-0 right-0 -mr-4 -mt-4 h-24 w-24 bg-primary/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
             </div>
-          ))}
+          </div>
+
+          {/* Right Column: Detailed Content (Stacked on Desktop) */}
+          <div className="w-full md:w-2/3 relative h-auto lg:h-150 flex flex-col lg:block items-center justify-center gap-12">
+            {processes.map((p, i) => (
+              <div
+                key={p.id}
+                ref={(el) => (cardRefs.current[i] = el)}
+                className={cn(
+                  "relative lg:absolute inset-0 m-auto w-full",
+                  "group space-y-8 p-8 md:p-12 rounded-3xl border border-white/5 bg-white/2 backdrop-blur-sm transition-colors duration-500 hover:border-primary/20 max-w-full!",
+                  "opacity-100 scale-100 translate-y-0 lg:opacity-0 lg:scale-90 lg:translate-y-full",
+                )}
+                style={{ zIndex: i + 10 }}
+              >
+                <div className="space-y-4">
+                  <span className="inline-block px-4 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest border border-primary/20">
+                    Phase {p.id}
+                  </span>
+                  <h3 className="font-display text-3xl md:text-5xl font-bold tracking-tight text-foreground">
+                    {p.title}
+                  </h3>
+                  <p className="font-sans text-lg md:text-xl text-foreground/60 leading-relaxed max-w-2xl">
+                    {p.description}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {p.deliverables.map((d) => (
+                    <div
+                      key={d}
+                      className="flex items-center gap-3 text-foreground/80 font-sans"
+                    >
+                      <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                      <span>{d}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Decorative background element */}
+                <div className="absolute top-0 right-0 -mr-4 -mt-4 h-24 w-24 bg-primary/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
+
+
