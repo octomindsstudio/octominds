@@ -4,6 +4,9 @@ import { BackgroundMesh } from "@/components/home/background-mesh";
 import { HeroSection } from "@/components/home/hero-section";
 import { ServicesOffering } from "@/components/home/services-offering";
 import { ProjectsOverview } from "@/components/home/projects-overview";
+import { ProcessSection } from "@/components/home/process-section";
+import { TestimonialsMarquee } from "@/components/home/testimonials-marquee";
+import { ContactCTA } from "@/components/home/contact-cta";
 
 export default function Home() {
   return (
@@ -12,6 +15,9 @@ export default function Home() {
       <HeroSection />
       <ProjectsOverview />
       <ServicesOffering />
+      <ProcessSection />
+      <TestimonialsMarquee />
+      <ContactCTA />
     </main>
   );
 }

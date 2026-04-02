@@ -201,3 +201,27 @@ img {
   -webkit-user-drag: none;
   -moz-window-dragging: none;
 }
+
+.prose-editorial {
+  max-width: 100% !important;
+}
+
+.prose-editorial h2 {
+  margin-top: 5rem;
+  margin-bottom: 2rem;
+  font-family: var(--font-syne);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  font-size: 2.5rem;
+  color: white;
+}
+
+.prose-editorial p {
+  margin-bottom: 2rem;
+}
+
+.prose-editorial img {
+  border-radius: 2rem;
+  margin: 4rem 0;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
