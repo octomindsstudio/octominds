@@ -1,6 +1,6 @@
 "use client";
 
-import { gsap } from "@/lib/gsap";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { useIsomorphicLayoutEffect } from "@/lib/gsap";
 import { cn } from "@heroui/styles";
 import { useRef } from "react";
@@ -31,7 +31,7 @@ const processes = [
     id: "04",
     title: "Deployment",
     description:
-      "Launching with confidence. We optimize for performance, security, and SEO, providing ongoing support to ensure your product scales seamlessly.",
+      "Launching with confidence. We optimize for performance, security, and basic SEO, providing ongoing support to ensure your product scales seamlessly.",
     deliverables: ["Cloud Scaling", "SEO Optimization", "Launch Support"],
   },
 ];
@@ -41,50 +41,69 @@ export function ProcessSection() {
   const leftColumnRef = useRef<HTMLDivElement>(null);
 
   useIsomorphicLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      // Pin the left column (numbers/title)
-      gsap.to(leftColumnRef.current, {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 100px",
-          end: "bottom bottom",
-          pin: true,
-          pinSpacing: false,
-          scrub: true,
-        },
+    if (!containerRef.current || !leftColumnRef.current) return;
+
+    const mm = gsap.matchMedia(containerRef.current);
+
+    mm.add("(min-width: 1024px)", () => {
+      // Pin the left column
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top 100px",
+        end: "bottom bottom",
+        pin: leftColumnRef.current,
+        pinSpacing: false,
+        scrub: true,
       });
 
-      // Animate lines and numbers based on current step
-      processes.forEach((_, i) => {
-        const stepTrigger = `.process-step-${i}`;
+      // Handle step animations and highlights
+      const steps = gsap.utils.toArray<HTMLElement>(
+        ".process-step",
+        containerRef.current,
+      );
+      steps.forEach((step, i) => {
         const numberId = `#process-number-${i}`;
+        const numberEl = containerRef.current?.querySelector(numberId);
 
-        gsap.fromTo(
-          numberId,
-          { opacity: 0.2, scale: 0.8 },
-          {
-            opacity: 1,
-            scale: 1,
-            scrollTrigger: {
-              trigger: stepTrigger,
-              start: "top 60%",
-              end: "bottom 40%",
-              toggleActions: "play reverse play reverse",
-            },
+        // Highlight number on the left
+        ScrollTrigger.create({
+          trigger: step,
+          start: "top 120px",
+          end: i === steps.length - 1 ? "bottom bottom" : "bottom 100px",
+          onToggle: (self) => {
+            if (self.isActive && numberEl) {
+              gsap.to(numberEl, {
+                opacity: 1,
+                x: 10,
+                color: "var(--primary)",
+                duration: 0.4,
+                overwrite: "auto",
+              });
+            } else if (numberEl) {
+              gsap.to(numberEl, {
+                opacity: 0.2,
+                x: 0,
+                color: "rgba(255, 255, 255, 0.4)",
+                duration: 0.4,
+                overwrite: "auto",
+              });
+            }
           },
-        );
+        });
       });
-    }, containerRef);
 
-    return () => ctx.revert();
+      ScrollTrigger.refresh();
+    });
+
+    return () => mm.revert();
   }, []);
 
   return (
     <section
       ref={containerRef}
-      className="relative w-full py-24 md:py-32 overflow-hidden border-t border-white/5"
+      className="relative w-full py-24 md:py-32 overflow-hidden"
     >
-      <div className="container mx-auto px-6 flex flex-col md:flex-row gap-12 md:gap-24">
+      <div className="container mx-auto px-6 flex flex-col md:flex-row items-start gap-12 md:gap-24">
         {/* Left Column: Sequential Counter (Sticky) */}
         <div
           ref={leftColumnRef}
@@ -118,6 +137,7 @@ export function ProcessSection() {
             <div
               key={p.id}
               className={cn(
+                "process-step",
                 `process-step-${i}`,
                 "group relative space-y-8 p-8 md:p-12 rounded-3xl border border-white/5 bg-white/2 backdrop-blur-sm transition-all duration-500 hover:border-primary/20",
               )}

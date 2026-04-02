@@ -21,7 +21,7 @@ const ProjectsView = ({
               Selected <span className="text-primary/80">Works</span>
             </h1>
           </Reveal>
-          <Reveal transition={{ delay: 0.2 }}>
+          <Reveal delay={0.2}>
             <p className="text-xl text-foreground/60 leading-relaxed font-sans">
               A curated collection of digital experiences where strategy meets
               cinema. From local culinary mastery to global SaaS innovation.
@@ -31,7 +31,7 @@ const ProjectsView = ({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {initialProjects.map((project, i) => (
-            <Reveal key={project.slug} transition={{ delay: 0.1 * i }}>
+            <Reveal key={project.slug} delay={0.1 * i}>
               <Link
                 href={`/projects/${project.slug}`}
                 className="group block relative overflow-hidden rounded-3xl border border-white/5 bg-white/2 backdrop-blur-md transition-all duration-500 hover:border-primary/30"

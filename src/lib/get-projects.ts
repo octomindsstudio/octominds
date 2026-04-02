@@ -70,7 +70,6 @@ export function getProjects({
       tools: entry.data.tools,
       tags: entry.data.tags,
       url: entry.url,
-      ...entry
     };
   });
 
