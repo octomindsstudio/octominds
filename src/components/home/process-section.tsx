@@ -57,7 +57,6 @@ export function ProcessSection() {
           start: "top top",
           end: "bottom bottom",
           scrub: 1,
-          markers: true,
         },
       });
 
@@ -89,7 +88,7 @@ export function ProcessSection() {
           cards[i - 1],
           {
             scale: 0.95,
-            opacity: 0.4,
+            opacity: 0.2,
             duration: 1,
             ease: "power2.inOut",
           },
@@ -133,20 +132,22 @@ export function ProcessSection() {
     >
       <div
         ref={stickyRef}
-        className="relative lg:sticky top-0 h-auto lg:h-screen w-full flex items-center justify-center overflow-visible lg:overflow-hidden"
+        className="relative lg:sticky top-0 h-auto lg:h-screen w-full flex items-start lg:items-center lg:justify-center overflow-visible lg:overflow-hidden"
       >
-        <div className="container mx-auto px-6 flex flex-col md:flex-row items-center gap-12 md:gap-24">
+        <div className="container mx-auto px-6 flex flex-col md:flex-row items-start lg:items-center gap-8 md:gap-24">
           {/* Left Column: Sequential Counter */}
           <div className="w-full md:w-1/3 flex flex-col justify-start relative z-20">
             <div className="space-y-4">
               <h2 className="font-display text-4xl md:text-5xl font-bold uppercase tracking-tight text-foreground">
                 Our <br /> <span className="text-primary italic">Process</span>
               </h2>
-              <div className="pt-8 space-y-6">
+              <div className="pt-8 space-y-6 hidden lg:flex lg:flex-col">
                 {processes.map((p, i) => (
                   <div
                     key={p.id}
-                    ref={(el) => (numberRefs.current[i] = el)}
+                    ref={(el) => {
+                      numberRefs.current[i] = el;
+                    }}
                     className="flex items-center gap-4 text-2xl font-display font-medium text-foreground/40 opacity-[0.2]"
                   >
                     <span className="text-primary font-bold">{p.id}</span>
@@ -161,11 +162,13 @@ export function ProcessSection() {
           </div>
 
           {/* Right Column: Detailed Content (Stacked on Desktop) */}
-          <div className="w-full md:w-2/3 relative h-auto lg:h-150 flex flex-col lg:block items-center justify-center gap-12">
+          <div className="w-full md:w-2/3 relative h-auto lg:h-150 flex flex-col lg:block items-center lg:justify-center gap-8 lg:gap-12">
             {processes.map((p, i) => (
               <div
                 key={p.id}
-                ref={(el) => (cardRefs.current[i] = el)}
+                ref={(el) => {
+                  cardRefs.current[i] = el;
+                }}
                 className={cn(
                   "relative lg:absolute inset-0 m-auto w-full",
                   "group space-y-8 p-8 md:p-12 rounded-3xl border border-white/5 bg-white/2 backdrop-blur-sm transition-colors duration-500 hover:border-primary/20 max-w-full!",
@@ -207,5 +210,3 @@ export function ProcessSection() {
     </section>
   );
 }
-
-
