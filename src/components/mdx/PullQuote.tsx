@@ -47,7 +47,7 @@ export function PullQuote({ children, author, role }: PullQuoteProps) {
       )}
 
       {/* Decorative lines */}
-      <div className="absolute left-1/2 -bottom-8 -translate-x-1/2 h-16 w-px bg-gradient-to-b from-primary/30 to-transparent" />
+      <div className="absolute left-1/2 -bottom-8 -translate-x-1/2 h-16 w-px bg-linear-to-b from-primary/30 to-transparent" />
     </motion.div>
   );
 }

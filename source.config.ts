@@ -27,6 +27,7 @@ export const project = defineCollections({
   dir: "content/projects",
   type: "doc",
   schema: frontmatterSchema.extend({
+    shortDescription: z.string().optional(),
     updatedAt: z.string(),
     createdAt: z.string(),
     thumbnail: z.string().optional(),

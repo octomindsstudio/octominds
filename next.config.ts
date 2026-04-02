@@ -3,7 +3,7 @@ import { createMDX } from "fumadocs-mdx/next";
 import { withFrontmatter } from "./plugins/frontmatter";
 
 const withFM = withFrontmatter({
-  dir: ["content/**/*"],
+  dir: ["./content/**/*"],
   frequency: 10,
 });
 

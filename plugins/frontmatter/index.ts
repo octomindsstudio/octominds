@@ -34,8 +34,11 @@ const MD_EXTENSIONS = [".mdx", ".md"];
  * - Works with both `.mdx`, `.md` (markdown).
  */
 export function withFrontmatter({ dir, frequency }: WithFrontmatterOptions) {
-  const isDev = process.argv.includes("dev");
-  const isBuild = process.argv.includes("build");
+  const phase = process.env.NEXT_PHASE;
+  const isDev =
+    process.env.NODE_ENV === "development" ||
+    phase === "phase-development-server";
+  const isBuild = phase === "phase-production-build";
 
   if ((isDev || isBuild) && process.env[WATCH_FLAG] !== "1") {
     process.env[WATCH_FLAG] = "1";

@@ -21,7 +21,6 @@ export function CodeBlock({
 
   const onCopy = () => {
     // Extract text content from children
-    const text = children?.toString() || "";
     // In actual implementation with Fumadocs, children is often a structured object.
     // We'll try to find the actual code text or let the user handle complex cases.
 
@@ -38,7 +37,7 @@ export function CodeBlock({
   return (
     <div className="group relative my-8 overflow-hidden rounded-2xl border border-border/40 dark:border-white/5 bg-black/5 dark:bg-black/40 backdrop-blur-md">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-2 border-b border-border/40 dark:border-white/5 bg-foreground/[0.02] dark:bg-white/2">
+      <div className="flex items-center justify-between px-4 py-2 border-b border-border/40 dark:border-white/5 bg-foreground/2 dark:bg-white/2">
         <div className="flex items-center gap-2">
           {lang && (
             <span className="text-[10px] font-bold uppercase tracking-widest text-primary/60 dark:text-primary/40 px-2 py-0.5 rounded-full bg-primary/5 border border-primary/10">
