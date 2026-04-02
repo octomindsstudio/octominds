@@ -1,4 +1,3 @@
-
 import { projectSource } from "@/lib/source";
 
 type GetProjectsParams = {
@@ -15,6 +14,8 @@ export interface QueryProjects {
     title: string;
     description?: string;
     thumbnail?: string;
+    banner?: string;
+    tags?: string[];
     createdAt: string;
     updatedAt: string;
     views?: number;
@@ -52,16 +53,18 @@ export async function getProjects({
 
   // Combine metadata + stats
   const projectsWithViews = filtered.map((entry) => {
+    const thumbnail = entry.data.thumbnail;
+    const banner = entry.data.banner;
     return {
       title: entry.data.title,
       description: entry.data.description,
       updatedAt: entry.data.updatedAt,
       createdAt: entry.data.createdAt,
-      thumbnail: entry.data.thumbnail,
+      thumbnail,
       links: entry.data.links,
       category: entry.data.category,
       slug: entry.slugs.join("/"),
-      banner: entry.data.banner,
+      banner,
       tools: entry.data.tools,
       tags: entry.data.tags,
       url: entry.url,
@@ -77,11 +80,11 @@ export async function getProjects({
       case "created_at":
         aKey = Math.max(
           new Date(a.createdAt ?? 0).getTime(),
-          new Date(a.updatedAt ?? 0).getTime()
+          new Date(a.updatedAt ?? 0).getTime(),
         );
         bKey = Math.max(
           new Date(b.createdAt ?? 0).getTime(),
-          new Date(b.updatedAt ?? 0).getTime()
+          new Date(b.updatedAt ?? 0).getTime(),
         );
         break;
       default: // title
@@ -99,7 +102,7 @@ export async function getProjects({
   const start = (page - 1) * limit;
   const pagedprojects = sorted.slice(
     start,
-    limit === Infinity ? undefined : start + limit
+    limit === Infinity ? undefined : start + limit,
   );
 
   const total = filtered.length;

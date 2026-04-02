@@ -9,20 +9,11 @@ import Link from "next/link";
 import ProjectsView from "../view";
 import * as motion from "framer-motion/client";
 import { BackgroundMesh } from "@/components/home/background-mesh";
+import { withUtm } from "@/lib/with-utm";
+import { Suspense } from "react";
+import { Loader } from "@/components/ui/loader";
 
 type Props = Promise<{ slug?: string[] }>;
-
-function withUtm(href: string, slug: string): string {
-  try {
-    const url = new URL(href);
-    url.searchParams.set("utm_source", "octominds_studio");
-    url.searchParams.set("utm_medium", "web");
-    url.searchParams.set("utm_content", slug);
-    return url.toString();
-  } catch {
-    return href;
-  }
-}
 
 const ProjectPage = async ({ params }: { params: Props }) => {
   const { slug } = await params;
@@ -40,16 +31,13 @@ const ProjectPage = async ({ params }: { params: Props }) => {
   if (!page) notFound();
   const MDX = page.data.body;
 
-  const thumbnail = (page.data.banner || page.data.thumbnail)?.replace(
-    /\.(png|jpe?g)$/i,
-    ".webp",
-  );
+  const thumbnail = page.data.banner || page.data.thumbnail;
 
   return (
     <div className="relative min-h-screen bg-background selection:bg-primary selection:text-white overflow-x-clip">
       {/* Landing Page Mesh Background - Testing */}
       <BackgroundMesh />
-      
+
       {/* Main Orchestration */}
       <div className="pt-24 md:pt-40">
         {/* High-End Hero Header */}
@@ -146,7 +134,10 @@ const ProjectPage = async ({ params }: { params: Props }) => {
                 <span className="text-[10px]  text-muted uppercase tracking-[0.4em] group-hover:text-primary transition-colors">
                   Timeline
                 </span>
-                <span className="text-2xl font-display font-semibold text-white tracking-tight">
+                <span
+                  className="text-2xl font-display font-semibold text-white tracking-tight"
+                  suppressHydrationWarning
+                >
                   {formatDate(page.data.createdAt, page.data.updatedAt)}
                 </span>
               </div>
@@ -231,7 +222,9 @@ const ProjectPage = async ({ params }: { params: Props }) => {
             <div className="absolute -left-12 top-0 bottom-0 w-px bg-white/5 hidden xl:block" />
             <DocsPage footer={{ enabled: false }}>
               <DocsBody className="prose-editorial text-lg! leading-relaxed! text-muted-foreground/85">
-                <MDX components={getMDXComponents()} />
+                <Suspense fallback={<Loader />}>
+                  <MDX components={getMDXComponents()} />
+                </Suspense>
               </DocsBody>
             </DocsPage>
           </motion.div>
