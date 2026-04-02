@@ -1,5 +1,3 @@
-"use client";
-
 import { BackgroundMesh } from "@/components/home/background-mesh";
 import { HeroSection } from "@/components/home/hero-section";
 import { ServicesOffering } from "@/components/home/services-offering";

@@ -13,6 +13,7 @@ export interface QueryProjects {
     tools?: string[];
     title: string;
     description?: string;
+    shortDescription?: string;
     thumbnail?: string;
     banner?: string;
     tags?: string[];
@@ -27,7 +28,7 @@ export interface QueryProjects {
   totalPages: number;
 }
 
-export async function getProjects({
+export function getProjects({
   page: pageParam = 1,
   limit: limitParam = 20,
   search: searchParam = "",
@@ -58,6 +59,7 @@ export async function getProjects({
     return {
       title: entry.data.title,
       description: entry.data.description,
+      shortDescription: entry.data.shortDescription,
       updatedAt: entry.data.updatedAt,
       createdAt: entry.data.createdAt,
       thumbnail,
@@ -68,6 +70,7 @@ export async function getProjects({
       tools: entry.data.tools,
       tags: entry.data.tags,
       url: entry.url,
+      ...entry
     };
   });
 

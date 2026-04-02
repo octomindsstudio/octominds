@@ -14,20 +14,7 @@ import { PullQuote } from "@/components/mdx/PullQuote";
 
 import { cn } from "@heroui/react";
 import { ImageZoom } from "fumadocs-ui/components/image-zoom";
-import {
-  Database,
-  ShoppingBag,
-  Globe,
-  Search,
-  MessageSquare,
-  Layout,
-  Clock,
-  Zap,
-  Shield,
-  Star,
-  Users,
-  Code,
-} from "lucide-react";
+import * as Lucide from "lucide-react";
 import Image from "next/image";
 
 // =============================================================================
@@ -53,13 +40,15 @@ const H2 = ({
   id,
   ...props
 }: React.HTMLAttributes<HTMLHeadingElement>) => (
-  <h2
-    id={id}
-    className="scroll-mt-24 font-display text-2xl md:text-3xl font-bold tracking-tight text-foreground mt-16 mb-5"
-    {...props}
-  >
-    {children}
-  </h2>
+  <Reveal delay={0.1}>
+    <h2
+      id={id}
+      className="scroll-mt-24 font-display text-2xl md:text-3xl font-bold tracking-tight text-foreground mt-16 mb-5"
+      {...props}
+    >
+      {children}
+    </h2>
+  </Reveal>
 );
 
 const H3 = ({
@@ -67,13 +56,15 @@ const H3 = ({
   id,
   ...props
 }: React.HTMLAttributes<HTMLHeadingElement>) => (
-  <h3
-    id={id}
-    className="scroll-mt-24 font-display text-xl md:text-2xl font-semibold tracking-tight text-foreground mt-12 mb-4"
-    {...props}
-  >
-    {children}
-  </h3>
+  <Reveal delay={0.1}>
+    <h3
+      id={id}
+      className="scroll-mt-24 font-display text-xl md:text-2xl font-semibold tracking-tight text-foreground mt-12 mb-4"
+      {...props}
+    >
+      {children}
+    </h3>
+  </Reveal>
 );
 
 const H4 = ({
@@ -329,18 +320,7 @@ const Cross = ({
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
   return {
     ...defaultMdxComponents,
-    Database,
-    ShoppingBag,
-    Globe,
-    Search,
-    MessageSquare,
-    Layout,
-    Clock,
-    Zap,
-    Shield,
-    Star,
-    Users,
-    Code,
+    ...Lucide,
 
     // Typography
     h1: H1,

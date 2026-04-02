@@ -3,34 +3,15 @@
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { useIsomorphicLayoutEffect } from "@/lib/gsap";
 import { useRef } from "react";
-
-const projects = [
-  {
-    num: "01",
-    title: "Teppan Tora",
-    subtitle: "Japanese Restaurant • Dhaka",
-    category: "Full Stack Development",
-    description:
-      "A premium halal Japanese restaurant brought online — complete e-commerce storefront with reservation system, menu management, and seamless Stripe checkout.",
-    tech: ["Next.js", "Prisma", "PostgreSQL"],
-    url: "https://teppantorabd.com",
-  },
-  {
-    num: "02",
-    title: "Arom Fashion",
-    subtitle: "Fashion E-Commerce • Bangladesh",
-    category: "UI/UX Design & Development",
-    description:
-      "An elegant fashion destination with a focus on beautiful product presentation, size-guided shopping experience, and conversion-optimized checkout flow.",
-    tech: ["React", "Tailwind CSS"],
-    url: "https://aromfashionbd.com",
-  },
-];
+import Image from "next/image";
+import Link from "next/link";
+import { getProjects } from "@/lib/get-projects";
 
 export function ProjectsOverview() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const marqueeRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
+  const { projects } = getProjects({ page: 1, limit: 10 });
 
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -163,13 +144,20 @@ export function ProjectsOverview() {
                 className={`absolute inset-0 bg-linear-to-br from-primary/20 to-primary/40 opacity-30`}
               />
 
-              {/* Placeholder "Project Card" */}
-              <div className="relative w-full aspect-video rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md shadow-2xl flex items-center justify-center group overflow-hidden">
-                {/* Floating Number */}
-                <span className="absolute -bottom-8 -right-8 font-display text-[12vw] font-black text-white/3 select-none">
-                  {project.num}
-                </span>
-              </div>
+              {/* Project Image */}
+              <Link
+                href={project.url}
+                className="relative w-full aspect-video rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md shadow-2xl flex items-center justify-center group overflow-hidden transition-transform duration-500 hover:scale-[1.02]"
+              >
+                {project.thumbnail && (
+                  <Image
+                    src={project.thumbnail}
+                    fill
+                    className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
+                    alt={project.title}
+                  />
+                )}
+              </Link>
             </div>
           ))}
         </div>
@@ -188,54 +176,81 @@ export function ProjectsOverview() {
                 </span>
               </div>
 
-              <p
-                className={`font-sans text-xs md:text-sm uppercase tracking-[0.3em] text-primary mb-4`}
-              >
-                {project.subtitle}
-              </p>
+              {project?.shortDescription && (
+                <p
+                  className={`font-sans text-xs md:text-sm uppercase tracking-[0.3em] text-primary mb-4`}
+                >
+                  {project?.shortDescription}
+                </p>
+              )}
 
-              <h3 className="font-sans text-4xl sm:text-5xl md:text-6xl font-black tracking-tight uppercase leading-[0.9] mb-8">
-                {project.title}
-              </h3>
+              <Link href={project.url} className="group w-fit block">
+                <h3 className="font-sans text-4xl sm:text-5xl md:text-6xl font-black tracking-tight uppercase leading-[0.9] mb-8 transition-colors group-hover:text-primary">
+                  {project.title}
+                </h3>
+              </Link>
 
               <p className="font-sans text-sm md:text-lg text-muted-foreground max-w-xl mb-10 leading-relaxed">
                 {project.description}
               </p>
 
-              <div className="flex flex-wrap gap-2 mb-10">
-                {project.tech.map((t) => (
-                  <span
-                    key={t}
-                    className="px-4 py-2 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest border border-border bg-foreground/5 text-muted-foreground transition-colors hover:border-primary/50"
-                  >
-                    {t}
-                  </span>
-                ))}
+              {project?.tools && project.tools.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-10">
+                  {project.tools.map((t) => (
+                    <span
+                      key={t}
+                      className="px-4 py-2 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest border border-border bg-foreground/5 text-muted-foreground transition-colors hover:border-primary/50"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              <div className="flex flex-wrap gap-6 items-center">
+                <a
+                  href={project.links?.live || project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-4 font-display text-sm md:text-base font-bold uppercase tracking-widest text-primary hover:text-foreground transition-colors"
+                >
+                  <span>Launch Website</span>
+                  <div className="w-10 h-10 rounded-full border border-primary flex items-center justify-center group-hover:bg-primary group-hover:text-background transition-all">
+                    <span className="text-lg">↗</span>
+                  </div>
+                </a>
+
+                <Link
+                  href={project.url}
+                  className="font-display text-xs md:text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors underline underline-offset-8"
+                >
+                  View Case Study
+                </Link>
               </div>
 
-              <a
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-4 font-display text-sm md:text-base font-bold uppercase tracking-widest text-primary hover:text-foreground transition-colors"
-              >
-                <span>Launch Website</span>
-                <div className="w-10 h-10 rounded-full border border-primary flex items-center justify-center group-hover:bg-primary group-hover:text-background transition-all">
-                  <span className="text-lg">↗</span>
-                </div>
-              </a>
-
               {/* Mobile Visual (visible only on mobile) */}
-              <div className="lg:hidden mt-12 w-full aspect-video rounded-2xl border border-border bg-bg-2 overflow-hidden relative">
-                <div
-                  className={`absolute inset-0 bg-linear-to-br from-primary/20 to-primary/40 opacity-30`}
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
+              <Link
+                href={project.url}
+                className="lg:hidden mt-12 w-full aspect-video rounded-2xl border border-border bg-bg-2 overflow-hidden relative block group"
+              >
+                {project.thumbnail ? (
+                  <Image
+                    src={project.thumbnail}
+                    fill
+                    className="object-cover w-full h-full opacity-60 transition-transform duration-700 group-hover:scale-110"
+                    alt={project.title}
+                  />
+                ) : (
+                  <div
+                    className={`absolute inset-0 bg-linear-to-br from-primary/20 to-primary/40 opacity-30`}
+                  />
+                )}
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40">
                   <span className="font-display text-2xl font-bold uppercase text-white/90">
                     {project.title}
                   </span>
                 </div>
-              </div>
+              </Link>
             </div>
           ))}
         </div>
