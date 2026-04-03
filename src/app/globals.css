@@ -194,6 +194,10 @@ button {
   @apply cursor-pointer;
 }
 
+button {
+  @apply select-none;
+}
+
 img {
   @apply select-none;
 

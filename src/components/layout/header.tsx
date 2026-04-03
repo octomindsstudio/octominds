@@ -9,7 +9,7 @@ import { cn } from "@heroui/styles";
 const NAV_LINKS = [
   { title: "Home", href: "/" },
   { title: "Projects", href: "/projects" },
-  { title: "About", href: "/about" },
+  // { title: "About", href: "/about" },
   { title: "Blog", href: "/blog" },
   { title: "Contact", href: "/contact" },
 ];
