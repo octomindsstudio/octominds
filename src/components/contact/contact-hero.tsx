@@ -38,7 +38,7 @@ export function ContactHero() {
 
       <h1
         ref={headlineRef}
-        className="font-display text-[12vw] sm:text-8xl md:text-9xl font-black tracking-tighter uppercase leading-[0.85] flex flex-col items-center [perspective:1000px]"
+        className="font-display text-[12vw] sm:text-8xl md:text-9xl font-black tracking-tighter uppercase leading-[0.85] flex flex-col items-center perspective-[1000px]"
       >
         <div className="overflow-hidden">
           <span className="word-reveal inline-block">The Next</span>

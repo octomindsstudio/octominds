@@ -40,7 +40,7 @@ const ProjectsView = ({
     try {
       const data = await fetchProjectsAction({
         cursor: cursor,
-        limit: 4,
+        limit: 10,
       });
 
       // Throttle for DOM/Animation stability
@@ -171,7 +171,7 @@ const ProjectsView = ({
                       )}
 
                       {/* Darkening Overlay */}
-                      <div className="absolute inset-0 bg-foreground/40 group-hover:bg-foreground/10 transition-colors duration-700" />
+                      <div className="absolute inset-0 bg-background/50 group-hover:bg-background/10 transition-colors duration-700" />
                     </div>
 
                     {/* Content Column */}

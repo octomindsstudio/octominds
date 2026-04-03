@@ -2,7 +2,7 @@ import { getProjects } from "@/lib/get-projects";
 import ProjectsView from "./view";
 
 const ProjectsIndexPage = async () => {
-  const projectsData = getProjects({ page: 1, limit: 1 });
+  const projectsData = getProjects({ page: 1, limit: 10 });
 
   return (
     <ProjectsView
