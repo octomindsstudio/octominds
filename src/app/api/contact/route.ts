@@ -1,6 +1,6 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
-import { SENDER_EMAIL, RECEIVER_EMAIL } from "@/config";
+import { SENDER_EMAIL, OCTOMINDS_EMAIL } from "@/config";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
     const { data, error } = await resend.emails.send({
       from: `Octominds <${SENDER_EMAIL}>`,
-      to: [RECEIVER_EMAIL],
+      to: [OCTOMINDS_EMAIL],
       subject: `New Inquiry from ${name}`,
       replyTo: email,
       html: `
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
           </div>
           
           <p style="font-size: 0.8em; color: #888; margin-top: 40px;">
-            © 2026 Octominds Studio - Kinetic Engine
+            © 2026 Octominds Studio
           </p>
         </div>
       `,

@@ -200,7 +200,7 @@ export function ContactFormBlocks() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className={clsx(
-            "bento-card group relative p-1 rounded-[2.5rem] flex items-center justify-center overflow-hidden h-full min-h-[200px] transition-all duration-500",
+            "bento-card group relative p-1 rounded-[2.5rem] flex items-center justify-center overflow-hidden h-full min-h-50 transition-all duration-500",
             status === "success"
               ? "bg-green-500"
               : status === "error"
@@ -224,24 +224,6 @@ export function ContactFormBlocks() {
             </motion.span>
           </AnimatePresence>
         </motion.button>
-
-        {/* Card 5: Connect (Socials) */}
-        <div className="bento-card lg:col-span-3 group relative p-8 rounded-[2.5rem] border border-border bg-foreground/2 backdrop-blur-md flex flex-wrap items-center justify-between gap-6 opacity-60 hover:opacity-100 transition-opacity">
-          <div className="flex gap-8">
-            <span className="font-sans text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-              hello@octominds.studio
-            </span>
-            <span className="font-sans text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-              Twitter / X
-            </span>
-            <span className="font-sans text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-              LinkedIn
-            </span>
-          </div>
-          <span className="font-sans text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-            © 2026 Octominds Studio
-          </span>
-        </div>
       </form>
     </div>
   );

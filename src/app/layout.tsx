@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "./providers/providers";
 import { CustomCursor } from "@/components/ui/custom-cursor";
 import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
 
 const varelaRound = Varela_Round({
   variable: "--font-varela-round",
@@ -43,7 +44,8 @@ export default function RootLayout({
         <CustomCursor />
         <Providers>
           <Header />
-          {children}
+          <main className="flex-1">{children}</main>
+          <Footer />
         </Providers>
       </body>
     </html>

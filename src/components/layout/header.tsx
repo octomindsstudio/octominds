@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@heroui/styles";
-import { COMPANY_NAME } from "@/config";
+import { COMPANY_NAME, OCTOMINDS_EMAIL } from "@/config";
 
 const NAV_LINKS = [
   { title: "Home", href: "/" },
@@ -118,10 +118,10 @@ export function Header() {
                 </div>
                 <div className="flex flex-col items-start sm:items-end gap-2 text-foreground">
                   <a
-                    href="mailto:hello@octomindsstudio.com"
+                    href={`mailto:${OCTOMINDS_EMAIL}`}
                     className="hover:text-primary transition-colors"
                   >
-                    hello@octomindsstudio.com
+                    {OCTOMINDS_EMAIL}
                   </a>
                   <a href="#" className="hover:text-primary transition-colors">
                     LinkedIn

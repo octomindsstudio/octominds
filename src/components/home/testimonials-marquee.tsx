@@ -84,7 +84,7 @@ const TestimonialCard = ({
 
 export function TestimonialsMarquee() {
   return (
-    <section className="relative w-full py-24 md:py-32 overflow-hidden bg-linear-to-b from-transparent to-background">
+    <section className="relative w-full py-24 md:py-32 overflow-hidden">
       <div className="container mx-auto px-6 mb-16 space-y-4 text-center">
         <h2 className="font-display text-4xl md:text-6xl font-bold uppercase tracking-tight text-foreground">
           Trusted by <span className="text-primary italic">Innovators</span>
