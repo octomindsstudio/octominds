@@ -13,7 +13,7 @@ export async function proxy(request: NextRequest) {
   headers.set(ORIGIN_HEADER, origin);
   headers.set(CURRENT_URL_HEADER, fullUrl);
 
-  return NextResponse.next({ headers });
+  return NextResponse.next({ request: { headers } });
 }
 
 export const config = {

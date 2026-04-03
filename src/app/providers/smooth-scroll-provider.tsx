@@ -16,32 +16,29 @@ export function SmoothScrollProvider({
   useEffect(() => {
     // Reset scroll when pathname changes
     window.scrollTo(0, 0);
-  }, [pathname]);
 
-  useEffect(() => {
-    function update(time: number) {
-      if (typeof window !== "undefined" && ScrollTrigger) {
-        ScrollTrigger.update();
+    // CRITICAL: Robust app-wide scroll recalculation for Next.js navigation
+    requestAnimationFrame(() => {
+      const lenis = (lenisRef.current as any)?.lenis;
+      if (lenis) {
+        lenis.resize();
+        console.log("[Scroll] Global Reset: Lenis resized for", pathname);
       }
-    }
 
-    const rafId = requestAnimationFrame(function loop(time) {
-      update(time);
-      requestAnimationFrame(loop);
+      // Sync GSAP with new page dimensions
+      ScrollTrigger.refresh();
+      ScrollTrigger.update();
     });
-
-    return () => cancelAnimationFrame(rafId);
-  }, []);
+  }, [pathname]);
 
   return (
     <ReactLenis
       root
       ref={lenisRef}
       options={{
-        lerp: 0.08,
+        lerp: 0.1, // Slightly faster for responsiveness
         duration: 1.2,
         smoothWheel: true,
-        wheelMultiplier: 1.2,
       }}
     >
       {children as any}

@@ -6,6 +6,7 @@ type GetProjectsParams = {
   search?: string;
   sortBy?: "views" | "created_at" | string;
   order?: "asc" | "desc";
+  cursor?: string; // New cursor parameter
 };
 
 export interface QueryProjects {
@@ -26,6 +27,7 @@ export interface QueryProjects {
   limit: number;
   total: number;
   totalPages: number;
+  nextCursor?: string; // Next cursor for the client
 }
 
 export function getProjects({
@@ -34,6 +36,7 @@ export function getProjects({
   search: searchParam = "",
   sortBy = "created_at",
   order = "desc",
+  cursor,
 }: GetProjectsParams) {
   const page = Math.max(1, pageParam);
   const limit =
@@ -100,12 +103,30 @@ export function getProjects({
     return 0;
   });
 
-  // Pagination slice
-  const start = (page - 1) * limit;
-  const pagedprojects = sorted.slice(
-    start,
-    limit === Infinity ? undefined : start + limit,
-  );
+  // Pagination logic: either via page or via cursor
+  let pagedprojects;
+  let nextCursor;
+
+  if (cursor) {
+    const cursorIndex = sorted.findIndex((p) => p.slug === cursor);
+    const start = cursorIndex !== -1 ? cursorIndex + 1 : 0;
+    pagedprojects = sorted.slice(start, start + limit);
+  } else {
+    const start = (page - 1) * limit;
+    pagedprojects = sorted.slice(
+      start,
+      limit === Infinity ? undefined : start + limit,
+    );
+  }
+
+  // Determine next cursor
+  if (pagedprojects.length > 0) {
+    const lastProject = pagedprojects[pagedprojects.length - 1];
+    const lastIndex = sorted.findIndex((p) => p.slug === lastProject.slug);
+    if (lastIndex < sorted.length - 1) {
+      nextCursor = lastProject.slug;
+    }
+  }
 
   const total = filtered.length;
   const totalPages = Math.ceil(total / limit);
@@ -116,5 +137,6 @@ export function getProjects({
     limit,
     total,
     totalPages,
+    nextCursor,
   };
 }

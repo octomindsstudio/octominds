@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@heroui/styles";
+import { COMPANY_NAME } from "@/config";
 
 const NAV_LINKS = [
   { title: "Home", href: "/" },
@@ -112,8 +113,8 @@ export function Header() {
                 transition={{ delay: 0.6, duration: 1 }}
               >
                 <div>
-                  <p>Octominds Studio</p>
-                  <p>© 2026</p>
+                  <p>{COMPANY_NAME}</p>
+                  <p>© {new Date().getFullYear()}</p>
                 </div>
                 <div className="flex flex-col items-start sm:items-end gap-2 text-foreground">
                   <a
@@ -121,9 +122,6 @@ export function Header() {
                     className="hover:text-primary transition-colors"
                   >
                     hello@octomindsstudio.com
-                  </a>
-                  <a href="#" className="hover:text-primary transition-colors">
-                    Twitter / X
                   </a>
                   <a href="#" className="hover:text-primary transition-colors">
                     LinkedIn

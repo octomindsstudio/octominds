@@ -7,15 +7,14 @@ const withFM = withFrontmatter({
   frequency: 10,
 });
 
-
 const withMDX = createMDX({
   // customise the config file path
-  configPath: "source.config.ts"
+  configPath: "source.config.ts",
 });
 
 const nextConfig: NextConfig = {
   /* config options here */
-  reactCompiler: true,
+  reactCompiler: false,
   images: {
     remotePatterns: [
       {

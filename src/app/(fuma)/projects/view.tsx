@@ -5,18 +5,84 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
-import { gsap, useIsomorphicLayoutEffect } from "@/lib/gsap";
-import { useRef } from "react";
+import { gsap, ScrollTrigger, useIsomorphicLayoutEffect } from "@/lib/gsap";
+import { useRef, useState, useCallback } from "react";
 import { BackgroundMesh } from "@/components/home/background-mesh";
+import { Loader } from "@/components/ui/loader";
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
+import { useLenis } from "@studio-freight/react-lenis";
+
+import { fetchProjectsAction } from "./actions";
 
 const ProjectsView = ({
   initialProjects,
+  nextCursor: initialCursor,
 }: {
   initialProjects: QueryProjects["projects"];
-  totalPages: number;
+  nextCursor?: string;
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const marqueeRef = useRef<HTMLDivElement>(null);
+
+  const [projects, setProjects] = useState(initialProjects);
+  const [cursor, setCursor] = useState(initialCursor);
+  const [hasMore, setHasMore] = useState(!!initialCursor);
+  const [isLoading, setIsLoading] = useState(false);
+  const isFetchingRef = useRef(false);
+  const lenis = useLenis();
+
+  const fetchMoreProjects = useCallback(async () => {
+    if (isLoading || !hasMore || isFetchingRef.current) return;
+
+    isFetchingRef.current = true;
+    setIsLoading(true);
+
+    try {
+      const data = await fetchProjectsAction({
+        cursor: cursor,
+        limit: 4,
+      });
+
+      // Throttle for DOM/Animation stability
+      setTimeout(() => {
+        setProjects((prev) => [...prev, ...data.projects]);
+        setCursor(data.nextCursor);
+        setHasMore(!!data.nextCursor);
+        setIsLoading(false);
+        isFetchingRef.current = false;
+
+        // CRITICAL: Double-stage sync to catch all layout shifts
+        requestAnimationFrame(() => {
+          lenis?.resize();
+          ScrollTrigger.refresh();
+
+          // Second pass after framer-motion shifts stabilize
+          requestAnimationFrame(() => {
+            lenis?.resize();
+            ScrollTrigger.refresh();
+            console.log("[Scroll] Deep sync completed");
+          });
+        });
+      }, 800);
+    } catch (error) {
+      console.error("Error fetching more projects:", error);
+      setIsLoading(false);
+      isFetchingRef.current = false;
+    }
+  }, [cursor, hasMore, isLoading, lenis]);
+
+  const { targetRef } = useIntersectionObserver({
+    onIntersect: fetchMoreProjects,
+    rootMargin: "200px",
+    enabled: hasMore && !isLoading,
+  });
+
+  useIsomorphicLayoutEffect(() => {
+    if (projects.length > initialProjects.length) {
+      ScrollTrigger.refresh();
+      console.log("[GSAP] Refreshed ScrollTrigger for new batch");
+    }
+  }, [projects.length, initialProjects.length]);
 
   useIsomorphicLayoutEffect(() => {
     if (!containerRef.current) return;
@@ -37,7 +103,7 @@ const ProjectsView = ({
     });
 
     return () => mm.revert();
-  }, []);
+  }, [projects.length]);
 
   return (
     <div
@@ -76,7 +142,7 @@ const ProjectsView = ({
           </header>
 
           <div className="flex flex-col gap-14 md:gap-40">
-            {initialProjects.map((project, i) => (
+            {projects.map((project, i) => (
               <motion.div
                 key={project.slug}
                 initial={{ opacity: 0, y: 40 }}
@@ -131,7 +197,7 @@ const ProjectsView = ({
                       <div className="flex flex-col items-start md:items-end gap-6">
                         {project?.tools && project.tools.length > 0 && (
                           <div className="flex flex-wrap md:justify-end gap-2">
-                            {project.tools.slice(0, 3).map((tool) => (
+                            {project.tools.slice(0, 3).map((tool: string) => (
                               <span
                                 key={tool}
                                 className="px-3 py-1 rounded-full border border-white/5 bg-white/2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 group-hover:border-primary/20 group-hover:text-primary transition-all"
@@ -159,6 +225,14 @@ const ProjectsView = ({
                 <div className="mt-14 md:mt-40 h-px w-full bg-linear-to-r from-white/10 via-white/5 to-transparent" />
               </motion.div>
             ))}
+          </div>
+
+          {/* Sentinel for Infinite Scroll */}
+          <div
+            ref={targetRef}
+            className="w-full flex justify-center py-12 pointer-events-none"
+          >
+            {isLoading && <Loader />}
           </div>
         </div>
       </div>

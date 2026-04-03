@@ -10,12 +10,7 @@ interface LoaderProps {
 
 export function Loader({ className, scale = 1 }: LoaderProps) {
   return (
-    <div
-      className={cn(
-        "w-full flex items-center justify-center relative overflow-hidden bg-background/5 group min-h-75",
-        className,
-      )}
-    >
+    <div className={cn("pointer-events-none select-none", className)}>
       {/* ATMOSPHERIC DEPTH: Dynamic Refraction Orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
@@ -136,28 +131,6 @@ export function Loader({ className, scale = 1 }: LoaderProps) {
           />
         ))}
       </div>
-
-      {/* TEXTURE: Deep Grain and Noise Overlay */}
-      <div className="absolute inset-0 opacity-[0.06] pointer-events-none mix-blend-overlay scale-[2]">
-        <svg
-          viewBox="0 0 200 200"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-full"
-        >
-          <filter id="deepNoise">
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.8"
-              numOctaves="4"
-              stitchTiles="stitch"
-            />
-          </filter>
-          <rect width="100%" height="100%" filter="url(#deepNoise)" />
-        </svg>
-      </div>
-
-      {/* Edge vignette for focus */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(0,0,0,0.4)_100%)] pointer-events-none" />
     </div>
   );
 }
