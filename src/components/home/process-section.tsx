@@ -56,7 +56,7 @@ export function ProcessSection() {
           trigger: sectionRef.current,
           start: "top top",
           end: "bottom bottom",
-          scrub: 1,
+          scrub: 1.5,
         },
       });
 
@@ -98,7 +98,7 @@ export function ProcessSection() {
         tl.to(
           numbers[i - 1],
           {
-            opacity: 0.2,
+            opacity: 0.1,
             color: "rgba(255, 255, 255, 0.4)",
             duration: 0.2,
           },
@@ -128,7 +128,7 @@ export function ProcessSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full h-auto lg:h-[400vh] py-24 md:py-32 overflow-visible"
+      className="relative w-full h-auto lg:h-[550vh] py-24 md:py-32 overflow-visible"
     >
       <div
         ref={stickyRef}
@@ -171,8 +171,8 @@ export function ProcessSection() {
                 }}
                 className={cn(
                   "relative lg:absolute inset-0 m-auto w-full",
-                  "group space-y-8 p-8 md:p-12 rounded-3xl border border-white/5 bg-white/2 backdrop-blur-sm transition-colors duration-500 hover:border-primary/20 max-w-full!",
-                  "opacity-100 scale-100 translate-y-0 lg:opacity-0 lg:scale-90 lg:translate-y-full",
+                  "group space-y-8 p-8 md:p-12 rounded-3xl border border-white/5 bg-white/2 lg:backdrop-blur-sm transition-colors duration-500 hover:border-primary/20 max-w-full!",
+                  "opacity-100 scale-100 translate-y-0 lg:opacity-0 lg:scale-90 lg:translate-y-full transform-gpu will-change-transform",
                 )}
                 style={{ zIndex: i + 10 }}
               >

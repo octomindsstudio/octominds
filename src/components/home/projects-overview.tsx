@@ -14,7 +14,10 @@ export function ProjectsOverview() {
   const { projects } = getProjects({ page: 1, limit: 10 });
 
   useIsomorphicLayoutEffect(() => {
-    const ctx = gsap.context(() => {
+    if (!sectionRef.current) return;
+    const mm = gsap.matchMedia(sectionRef.current);
+
+    mm.add("(min-width: 1024px)", () => {
       // Kinetic Marquee Effect
       if (marqueeRef.current) {
         gsap.to(marqueeRef.current, {
@@ -22,30 +25,10 @@ export function ProjectsOverview() {
             trigger: sectionRef.current,
             start: "top bottom",
             end: "bottom top",
-            scrub: 1,
+            scrub: 1.5,
           },
           xPercent: -15,
         });
-      }
-
-      // Staggered Word Reveal
-      if (headlineRef.current) {
-        const words = headlineRef.current.querySelectorAll(".word-reveal");
-        gsap.fromTo(
-          words,
-          { y: "100%", opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 1.2,
-            stagger: 0.15,
-            ease: "power4.out",
-            scrollTrigger: {
-              trigger: headlineRef.current,
-              start: "top 90%",
-            },
-          },
-        );
       }
 
       // Split Sticky Projects Reveal
@@ -82,8 +65,31 @@ export function ProjectsOverview() {
           },
         });
       });
-    }, sectionRef);
-    return () => ctx.revert();
+    });
+
+    mm.add("(all)", () => {
+      // Staggered Word Reveal (Keep for all screens but ensure efficiency)
+      if (headlineRef.current) {
+        const words = headlineRef.current.querySelectorAll(".word-reveal");
+        gsap.fromTo(
+          words,
+          { y: "100%", opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            stagger: 0.1,
+            ease: "power4.out",
+            scrollTrigger: {
+              trigger: headlineRef.current,
+              start: "top 90%",
+            },
+          },
+        );
+      }
+    });
+
+    return () => mm.revert();
   }, []);
 
   return (
@@ -155,7 +161,7 @@ export function ProjectsOverview() {
               {/* Project Image */}
               <Link
                 href={project.url}
-                className="relative w-full aspect-video rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md shadow-2xl flex items-center justify-center group overflow-hidden transition-transform duration-500 hover:scale-[1.02]"
+                className="relative w-full aspect-video rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md shadow-2xl flex items-center justify-center group overflow-hidden transition-transform duration-500 hover:scale-[1.02] transform-gpu will-change-transform"
               >
                 {project.thumbnail && (
                   <Image

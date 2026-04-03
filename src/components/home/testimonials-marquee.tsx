@@ -53,7 +53,7 @@ const TestimonialCard = ({
   role,
   avatar,
 }: (typeof testimonials)[0]) => (
-  <div className="shrink-0 w-87.5 md:w-112.5 h-full p-8 rounded-3xl border border-white/5 bg-white/2 backdrop-blur-sm group hover:border-primary/20 transition-all duration-500">
+  <div className="shrink-0 w-87.5 md:w-112.5 h-full p-8 rounded-3xl border border-white/5 bg-white/2 md:backdrop-blur-sm group hover:border-primary/20 transition-all duration-500 transform-gpu will-change-transform">
     <div className="flex flex-col justify-between h-full space-y-6">
       <div className="space-y-4">
         <div className="flex gap-1 text-primary">

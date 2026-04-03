@@ -147,7 +147,7 @@ export function ServicesOffering() {
           <div
             key={item.id}
             className={cn(
-              "service-card group relative p-10 md:p-12 rounded-[2.5rem] border border-border bg-foreground/2 backdrop-blur-md transition-all duration-700 hover:border-primary/30 hover:bg-foreground/4 hover:shadow-[0_0_80px_-20px_rgba(var(--primary-rgb),0.1)] flex flex-col overflow-hidden h-full",
+              "service-card group relative p-10 md:p-12 rounded-[2.5rem] border border-border bg-foreground/2 lg:backdrop-blur-md transition-all duration-700 hover:border-primary/30 hover:bg-foreground/4 hover:shadow-[0_0_80px_-20px_rgba(var(--primary-rgb),0.1)] flex flex-col overflow-hidden h-full transform-gpu will-change-transform",
               BENTO_PATTERN[i % offerings.length],
             )}
           >
