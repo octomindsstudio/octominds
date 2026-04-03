@@ -28,7 +28,7 @@ export function Header() {
   return (
     <>
       {/* Global Header */}
-      <header className="fixed top-0 left-0 w-full p-6 md:p-10 flex justify-between items-center z-100 mix-blend-difference text-white pointer-events-none">
+      <header className="fixed top-0 left-0 w-full p-6 md:p-10 flex justify-between items-center z-100 text-foreground pointer-events-none">
         <div className="pointer-events-auto">
           <Link href="/">
             <motion.div
@@ -45,16 +45,16 @@ export function Header() {
         <div className="pointer-events-auto flex items-center gap-4">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="group relative flex flex-col justify-center items-center w-12 h-12 rounded-full border border-white/20 hover:bg-white transition-colors cursor-pointer z-100"
+            className="group relative flex flex-col justify-center items-center w-12 h-12 rounded-full border border-foreground/20 hover:bg-foreground/10 transition-colors cursor-pointer z-100"
             aria-label="Toggle navigation menu"
           >
             <motion.span
-              className="absolute w-4 h-[1.5px] bg-white group-hover:bg-black"
+              className="absolute w-4 h-[1.5px] bg-foreground group-hover:bg-foreground/50"
               animate={{ y: isOpen ? 0 : -3, rotate: isOpen ? 45 : 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             />
             <motion.span
-              className="absolute w-4 h-[1.5px] bg-white group-hover:bg-black"
+              className="absolute w-4 h-[1.5px] bg-foreground group-hover:bg-foreground/50"
               animate={{ y: isOpen ? 0 : 3, rotate: isOpen ? -45 : 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             />

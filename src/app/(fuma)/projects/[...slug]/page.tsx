@@ -23,7 +23,7 @@ const ProjectDetailPage = async ({ params }: { params: Props }) => {
   const thumbnail = page.data.banner || page.data.thumbnail;
 
   return (
-    <div className="relative min-h-screen bg-background selection:bg-primary selection:text-white overflow-x-clip">
+    <div className="relative min-h-screen bg-background selection:bg-primary selection:text-foreground overflow-x-clip">
       <BackgroundMesh />
 
       <div className="pt-24 md:pt-40">
@@ -44,7 +44,7 @@ const ProjectDetailPage = async ({ params }: { params: Props }) => {
 
               <div className="relative group max-w-5xl">
                 <h1
-                  className={`font-bold bg-linear-to-br from-white via-white to-white/40 bg-clip-text text-transparent transform-gpu transition-all duration-1000 ${
+                  className={`font-bold bg-linear-to-br from-foreground via-foreground to-foreground/40 bg-clip-text text-transparent transform-gpu transition-all duration-1000 ${
                     page.data.title.length > 30
                       ? "text-3xl md:text-5xl lg:text-6xl"
                       : "text-5xl md:text-7xl lg:text-8xl"
@@ -60,7 +60,7 @@ const ProjectDetailPage = async ({ params }: { params: Props }) => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4, duration: 1 }}
-                  className="font-sans md:text-2xl text-white/60 leading-relaxed max-w-2xl font-light"
+                  className="font-sans md:text-2xl text-foreground/60 leading-relaxed max-w-2xl font-light"
                 >
                   {page.data.description}
                 </motion.p>
@@ -80,7 +80,7 @@ const ProjectDetailPage = async ({ params }: { params: Props }) => {
                         key={label}
                         href={trackedHref}
                         target="_blank"
-                        className="group/link inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full text-[11px] font-bold uppercase tracking-[0.25em] border border-white/10 bg-white/5 text-white/70 hover:bg-white/10 hover:text-white hover:border-white/20 transition-all duration-300"
+                        className="group/link inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full text-[11px] font-bold uppercase tracking-[0.25em] border border-foreground/10 bg-foreground/5 text-foreground/70 hover:bg-foreground/10 hover:text-foreground hover:border-foreground/20 transition-all duration-300"
                       >
                         {label}
                         <svg
@@ -108,20 +108,61 @@ const ProjectDetailPage = async ({ params }: { params: Props }) => {
               initial={{ opacity: 0, scaleX: 0.9 }}
               animate={{ opacity: 1, scaleX: 1 }}
               transition={{ delay: 0.8, duration: 1.2 }}
-              className="flex flex-wrap items-center gap-16 border-y border-white/10 py-10"
+              className="flex flex-wrap items-center gap-16 border-y border-border py-10"
             >
               <div className="flex flex-col gap-3 group">
                 <span className="text-[10px] text-muted uppercase tracking-[0.4em]">
                   Timeline
                 </span>
                 <span
-                  className="text-2xl font-display font-semibold text-white tracking-tight"
+                  className="text-2xl font-display font-semibold text-foreground tracking-tight"
                   suppressHydrationWarning
                 >
                   {formatDate(page.data.createdAt, page.data.updatedAt)}
                 </span>
               </div>
-              {/* ... other metadata components ... */}
+              {page.data.tools && page.data.tools.length > 0 && (
+                <>
+                  <div className="flex flex-col gap-3 group">
+                    <span className="text-[10px] text-muted uppercase tracking-[0.4em] group-hover:text-primary transition-colors">
+                      Technologies
+                    </span>
+                    <div className="flex flex-wrap max-w-sm">
+                      {page.data.tools.map((tool, index) => (
+                        <span
+                          key={index}
+                          className="text-sm flex items-center font-display font-medium text-foreground/60"
+                        >
+                          {tool}
+                          {index < page.data.tools!.length - 1 ? (
+                            <div className="h-6 w-px mx-4 bg-foreground/10" />
+                          ) : (
+                            ""
+                          )}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {page.data.tags && page.data.tags.length > 0 && (
+                <div className="flex flex-col gap-3 group">
+                  <span className="text-[10px] text-muted uppercase tracking-[0.4em] group-hover:text-primary transition-colors">
+                    Tags
+                  </span>
+                  <div className="flex flex-wrap gap-2 max-w-md">
+                    {page.data.tags.map((tag, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-1 rounded-full border border-border bg-border/30 text-[11px] font-medium text-foreground/60 uppercase tracking-wider"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </motion.div>
           </div>
         </section>
@@ -134,7 +175,7 @@ const ProjectDetailPage = async ({ params }: { params: Props }) => {
               whileInView={{ scale: 1, opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
-              className="relative w-full aspect-21/9 rounded-xl md:rounded-[2rem] overflow-hidden group shadow-2xl border border-white/5"
+              className="relative w-full aspect-21/9 rounded-xl md:rounded-[2rem] overflow-hidden group shadow-2xl border border-border/50"
             >
               <Image
                 src={thumbnail}

@@ -161,7 +161,7 @@ export function ProjectsOverview() {
               {/* Project Image */}
               <Link
                 href={project.url}
-                className="relative w-full aspect-video rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md shadow-2xl flex items-center justify-center group overflow-hidden transition-transform duration-500 hover:scale-[1.02] transform-gpu will-change-transform"
+                className="relative w-full aspect-video rounded-2xl border border-border bg-bg-2 backdrop-blur-md shadow-2xl flex items-center justify-center group overflow-hidden transition-transform duration-500 hover:scale-[1.02] transform-gpu will-change-transform"
               >
                 {project.thumbnail && (
                   <Image
@@ -251,7 +251,7 @@ export function ProjectsOverview() {
                   <Image
                     src={project.thumbnail}
                     fill
-                    className="object-cover w-full h-full opacity-60 transition-transform duration-700 group-hover:scale-110"
+                    className="object-cover w-full h-full opacity-100 transition-transform duration-700 group-hover:scale-110"
                     alt={project.title}
                   />
                 ) : (
@@ -260,7 +260,7 @@ export function ProjectsOverview() {
                       className={`absolute inset-0 bg-linear-to-br from-primary/20 to-primary/40 opacity-30`}
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                      <span className="font-display text-2xl font-bold uppercase text-white/90">
+                      <span className="font-display text-2xl font-bold uppercase text-foreground/90">
                         {project.title}
                       </span>
                     </div>

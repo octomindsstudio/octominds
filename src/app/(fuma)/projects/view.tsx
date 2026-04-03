@@ -108,7 +108,7 @@ const ProjectsView = ({
   return (
     <div
       ref={containerRef}
-      className="relative min-h-screen bg-background pt-32 md:pt-48 pb-32 overflow-x-hidden"
+      className="relative min-h-screen bg-background pt-32 md:pt-48 overflow-x-hidden"
     >
       <BackgroundMesh />
 
@@ -141,7 +141,7 @@ const ProjectsView = ({
             </p>
           </header>
 
-          <div className="flex flex-col gap-14 md:gap-40">
+          <div className="flex flex-col gap-14 md:gap-28">
             {projects.map((project, i) => (
               <motion.div
                 key={project.slug}
@@ -166,26 +166,27 @@ const ProjectsView = ({
                           alt={project.title}
                           fill
                           priority={i < 2}
-                          className="object-cover transition-transform duration-[2.5s] group-hover:scale-105 opacity-80 group-hover:opacity-100"
+                          className="object-cover transition-transform duration-[2.5s] group-hover:scale-105"
                         />
                       )}
 
                       {/* Darkening Overlay */}
-                      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors duration-700" />
-
-                      {/* Floating Category Tag */}
-                      <div className="absolute top-8 left-8">
-                        <span className="px-4 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-[10px] font-black uppercase tracking-[0.3em] text-white">
-                          {project.category || "Case Study"}
-                        </span>
-                      </div>
+                      <div className="absolute inset-0 bg-foreground/40 group-hover:bg-foreground/10 transition-colors duration-700" />
                     </div>
 
                     {/* Content Column */}
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 px-4 md:px-8">
                       <div className="max-w-2xl">
+                      <div className="flex items-center gap-3 mb-6">
+                        <div
+                          className={`w-2.5 h-2.5 rounded-full bg-primary`}
+                        />
+                        <span className="font-sans text-xs md:text-sm uppercase tracking-[0.25em] text-muted-foreground">
+                          {project.category}
+                        </span>
+                      </div>
                         <div className="overflow-hidden mb-4">
-                          <h3 className="text-4xl md:text-7xl font-display font-black uppercase tracking-tighter text-white transition-colors group-hover:text-primary leading-[0.9]">
+                          <h3 className="text-4xl md:text-7xl font-display font-black uppercase tracking-tighter text-foreground transition-colors group-hover:text-primary leading-[0.9]">
                             {project.title}
                           </h3>
                         </div>
@@ -222,7 +223,9 @@ const ProjectsView = ({
                 </Link>
 
                 {/* Section Separator */}
-                <div className="mt-14 md:mt-40 h-px w-full bg-linear-to-r from-white/10 via-white/5 to-transparent" />
+                {(i < projects.length - 1 || hasMore) && (
+                  <div className="mt-14 md:mt-28 h-px w-full bg-linear-to-r from-white/10 via-white/5 to-transparent" />
+                )}
               </motion.div>
             ))}
           </div>
