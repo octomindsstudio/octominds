@@ -36,7 +36,7 @@ export function SmoothScrollProvider({
       root
       ref={lenisRef}
       options={{
-        lerp: 0.1, // Slightly faster for responsiveness
+        lerp: 0.05, // Slightly faster for responsiveness
         duration: 1.2,
         smoothWheel: true,
       }}
